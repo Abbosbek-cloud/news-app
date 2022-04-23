@@ -1,0 +1,32 @@
+{
+  "news": [
+    {
+      "id": "db049e69-8bb9-442d-afcc-cc696538d1d6",
+      "description": "border-top-right-radius: 10px;\n    border-bottom-right-radius: 10px;border-top-right-radius: 10px;\n    border-bottom-right-radius: 10px;",
+      "name": "It is a hot news",
+      "category": "Sport news"
+    }
+  ],
+  "filter": [
+    {
+      "name": "all",
+      "label": "All",
+      "className": "btn-outline-dark"
+    },
+    {
+      "name": "Hot news",
+      "label": "Hot news",
+      "className": "btn-danger"
+    },
+    {
+      "name": "Sport news",
+      "label": "Sport news",
+      "className": "btn-primary"
+    },
+    {
+      "name": "World news",
+      "label": "World news",
+      "className": "btn-success"
+    }
+  ]
+}
