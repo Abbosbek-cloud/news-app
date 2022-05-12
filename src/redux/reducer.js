@@ -17,7 +17,6 @@ const initialState = {
   filter: [],
   filterLoadingStatus: "abek",
   activeFilter: "all",
-  filteredNews: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,12 +30,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         news: action.payload,
-        filteredNews:
-          state.activeFilter === "all"
-            ? action.payload
-            : action.payload.filter(
-                (item) => item.category === state.activeFilter
-              ),
         newsLoadingStatus: "",
       };
 
@@ -46,26 +39,14 @@ const reducer = (state = initialState, action) => {
         newsLoadingStatus: "error",
       };
     case NEWS_FETCH_UPDATE:
-      const newItem = [...state.news, action.payload];
       return {
         ...state,
-        news: newItem,
-        filteredNews:
-          state.activeFilter === "all"
-            ? newItem
-            : newItem.filter((item) => item.category === state.activeFilter),
+        news: [...state.news, action.payload],
       };
     case NEWS_FETCH_DELETE:
-      const newList = [
-        ...state.news.filter((item) => item.id !== action.payload),
-      ];
       return {
         ...state,
-        news: newList,
-        filteredNews:
-          state.activeFilter === "all"
-            ? newList
-            : newList.filter((item) => item.category === state.activeFilter),
+        news: state.news.filter((item) => item.id !== action.payload),
       };
     case FILTER_FETCHING:
       return {
@@ -87,10 +68,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeFilter: action.payload,
-        filteredNews:
-          action.payload === "all"
-            ? state.news
-            : state.news.filter((item) => item.category === action.payload),
       };
     default:
       return state;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHttp } from "../hook/useHttp";
 import { v4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
-import { newsAdd } from "../redux/actions";
+import { filterFetchError, newsAdd } from "../redux/actions";
 import { toast } from "react-toastify";
 
 function NewsAddForm() {
@@ -10,7 +10,9 @@ function NewsAddForm() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
 
-  const { filter, filterLoadingStatus } = useSelector((state) => state);
+  const { filter, filterLoadingStatus } = useSelector(
+    (state) => state.filterNews
+  );
   const dispatch = useDispatch();
   const { request } = useHttp();
 
@@ -18,9 +20,8 @@ function NewsAddForm() {
     e.preventDefault();
     const news = { id: v4(), description, name, category };
     request("http://localhost:3001/news", "POST", JSON.stringify(news))
-      .then((res) => console.log(res))
       .then(dispatch(newsAdd(news)))
-      .catch((err) => console.log(err));
+      .catch((err) => dispatch(filterFetchError(err)));
     setName("");
     setDescription("");
     setCategory("");

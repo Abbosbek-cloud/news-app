@@ -7,13 +7,14 @@ import {
   filterFetching,
   activeFilteredChange,
   filterFetchError,
+  filterFetch,
 } from "../redux/actions";
 import ErrorPage from "./ErrorPage";
 import classNames from "classnames";
 
 function NewsFilter() {
   const { filter, activeFilter, filterLoadingStatus } = useSelector(
-    (state) => state
+    (state) => state.filterNews
   );
 
   const dispatch = useDispatch();
@@ -21,13 +22,7 @@ function NewsFilter() {
   const { request } = useHttp();
 
   useEffect(() => {
-    dispatch(filterFetching());
-    request("http://localhost:3001/filter")
-      .then((data) => {
-        dispatch(filterFetched(data));
-        console.log(data);
-      })
-      .catch((err) => dispatch(filterFetchError(err)));
+    dispatch(filterFetch(request, dispatch));
     // eslint-disable-next-line
   }, []);
 
